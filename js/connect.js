@@ -26,7 +26,6 @@ let selectedAccount;
  */
 function init() {
 
-  console.log("Initializing example");
   console.log("WalletConnectProvider is", WalletConnectProvider);
   console.log("window.web3 is", window.web3, "window.ethereum is", window.ethereum);
 
@@ -47,8 +46,6 @@ function init() {
     providerOptions, // required
     disableInjectedProvider: false, // optional. For MetaMask / Brave / Opera.
   });
-
-  console.log("Web3Modal instance is", web3Modal);
 }
 
 
