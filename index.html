@@ -95,10 +95,9 @@
                 </div>
             </form>
           </div>
-
-          <div class="col-md-12">
-            <h2 class="text-center fw-bold">Fund Contract</h2>
-          </div>
+        </div>
+        <h2 class="text-center fw-bold">Fund Contract</h2>
+        <div class="row">
 
           <!-- Set Contract Address -->
           <div class="col-md-12">
@@ -150,7 +149,18 @@
                 </div>
             </form>
           </div>
-
+          <!-- Get Token Price -->
+          <div class="col-md-6">
+            <h3>Get Token Price</h3>
+            <form id="get-token-price-form">
+                <div style="margin-bottom: 10px;">
+                  <input type="submit" value="Submit" />
+                </div>
+                <div>
+                  <p name="result"></p>
+                </div>
+            </form>
+          </div>
           <!-- Get Group Bonus -->
           <div class="col-md-6">
             <h3>Get Group Bonus</h3>
@@ -168,19 +178,7 @@
             </form>
           </div>
 
-          <!-- Get Token Price -->
-          <div class="col-md-6">
-            <h3>Get Token Price</h3>
-            <form id="get-token-price-form">
-                <div style="margin-bottom: 10px;">
-                  <input type="submit" value="Submit" />
-                </div>
-                <div>
-                  <p name="result"></p>
-                </div>
-            </form>
-          </div>
-
+          
           <!-- Withdraw Token -->
           <div class="col-md-6">
             <h3>Withdraw Token</h3>
@@ -199,6 +197,52 @@
                 <div>
                   <p name="result"></p>
                 </div>
+            </form>
+          </div>
+
+          <!-- Claim Eth -->
+          <div class="col-md-6" style="margin-bottom: 30px;">
+            <h3>Claim Eth</h3>
+            <form id="claim-eth-form">
+              <div style="margin-bottom: 10px;">
+                <p>Amount</p>
+                <input type="text" name="amount"/>
+              </div>
+              <div style="margin-bottom: 10px;">
+                <p>Address</p>
+                <input type="text" name="address"/>
+              </div>
+              <div style="margin-bottom: 10px;">
+                <input type="submit" value="Submit" />
+              </div>
+              <div>
+                <p name="result"></p>
+              </div>
+            </form>
+          </div>
+
+          <!-- Withdraw All -->
+          <div class="col-md-6">
+            <h3>Withdraw All</h3>
+            <form id="withdraw-all-form">
+              <div style="margin-bottom: 10px;">
+                <input type="submit" value="Submit" />
+              </div>
+              <div>
+                <p name="result"></p>
+              </div>
+            </form>
+          </div>
+          <!-- Claim All -->
+          <div class="col-md-6" style="margin-bottom: 50px;">
+            <h3>Claim All</h3>
+            <form id="claim-all-form">
+              <div style="margin-bottom: 10px;">
+                <input type="submit" value="Submit" />
+              </div>
+              <div>
+                <p name="result"></p>
+              </div>
             </form>
           </div>
         </div>

@@ -24,7 +24,7 @@ async function deployContract(evt) {
         const factory = new ethers.Contract(FACTORY_ADDRESS, abi, signer);
 
         console.log({ factory });
-        res = await factory.produce(token, timestamps.split(' '), prices.split(' '), endtime, thresholds.split(' '), bonuses.split(' '));
+        const res = await factory.produce(token, timestamps.split(' '), prices.split(' '), endtime, thresholds.split(' '), bonuses.split(' '));
         console.log({res});
         factory.on("Produced", async (from, to) => {
             console.log('contract address', to);
@@ -84,7 +84,7 @@ async function getConfig(evt) {
         const contract = new ethers.Contract(CONTRACT_ADDRESS, abi, signer);
 
         console.log({ contract });
-        res = await contract.getConfig();
+        const res = await contract.getConfig();
         const configObj = {
             _sellingToken: res._sellingToken,
             _timestamps: res._timestamps,
@@ -115,7 +115,7 @@ async function getGroupBonus(evt) {
         const contract = new ethers.Contract(CONTRACT_ADDRESS, abi, signer);
 
         console.log({ contract });
-        res = await contract.getGroupBonus(groupName);
+        const res = await contract.getGroupBonus(groupName);
         console.log(utils.formatUnits(res, 0));
         formEl.querySelector("p[name='result']").innerHTML = utils.formatUnits(res, 0) + '';
     } catch (e) {
@@ -157,7 +157,7 @@ async function getTokenPrice(evt) {
         const signer = provider.getSigner();
         const contract = new ethers.Contract(CONTRACT_ADDRESS, abi, signer);
 
-        res = await contract.getTokenPrice();
+        const res = await contract.getTokenPrice();
         console.log(utils.formatUnits(res, 0));
         formEl.querySelector("p[name='result']").innerHTML = utils.formatUnits(res) + 'Ether';
     } catch (e) {
@@ -185,6 +185,65 @@ async function withdrawToken(evt) {
     }
 }
 
+async function claim(evt) {
+    evt.preventDefault();
+    const formEl = document.querySelector("#claim-eth-form");
+    const amount = formEl.querySelector("input[name='amount']").value;
+    const address = formEl.querySelector("input[name='address']").value;
+
+    const file = await fetch('../contracts/fund-contract.abi.json');
+    const abi = await file.json();
+
+    try {
+        const provider = new ethers.providers.Web3Provider(window.ethereum);
+        const signer = provider.getSigner();
+        const contract = new ethers.Contract(CONTRACT_ADDRESS, abi, signer);
+
+        await contract.claim(amount, address);
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+async function withdrawAll(evt) {
+    evt.preventDefault();
+    const formEl = document.querySelector("#withdraw-all-form");
+
+    const file = await fetch('../contracts/fund-contract.abi.json');
+    const abi = await file.json();
+
+    try {
+        const provider = new ethers.providers.Web3Provider(window.ethereum);
+        const signer = provider.getSigner();
+        const contract = new ethers.Contract(CONTRACT_ADDRESS, abi, signer);
+
+        const res = await contract.withdrawAll();
+        console.log(res);
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+async function claimAll(evt) {
+    evt.preventDefault();
+    const formEl = document.querySelector("#claim-all-form");
+
+    const file = await fetch('../contracts/fund-contract.abi.json');
+    const abi = await file.json();
+
+    try {
+        const provider = new ethers.providers.Web3Provider(window.ethereum);
+        const signer = provider.getSigner();
+        const contract = new ethers.Contract(CONTRACT_ADDRESS, abi, signer);
+
+        const res = await contract.claimAll();
+        console.log(res);
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+
 window.addEventListener('load', async () => {
     // Factory
     document.querySelector("#deploy-form").addEventListener("submit", deployContract);
@@ -197,6 +256,9 @@ window.addEventListener('load', async () => {
     document.querySelector("#get-group-bonus-form").addEventListener("submit", getGroupBonus);
     document.querySelector("#get-token-price-form").addEventListener("submit", getTokenPrice);
     document.querySelector("#withdraw-token-form").addEventListener("submit", withdrawToken);
+    document.querySelector("#claim-eth-form").addEventListener("submit", claim);
+    document.querySelector("#withdraw-all-form").addEventListener("submit", withdrawAll);
+    document.querySelector("#claim-all-form").addEventListener("submit", claimAll);
     
 });
     
